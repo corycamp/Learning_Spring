@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <!-- You have to specify the entire package path when using the class field for Bean  -->
+    <!--
+         SCOPE
+
+         scope is "singleton" by default, prototype means that any time you call getBean with the bean id
+         you will get a new instance of the object. If it remains as singleton, all references point to the same
+         object.
+
+         Also when using singleton, the object is created when a new context is initialized. With prototype,
+         the object is created when getBean is used.
+
+         <bean id="worker" class="org.example.Worker" scope="prototype">
+
+
+         AUTOWIRE
+
+         autowire is used to connect objects when they are referencing each other.
+         Instead of specifying <property> which would use the setters to set up the connection with the bean id.
+         Auto wire will setup this connection automatically by byName or byType. This will compare the declaration of
+         the variable in the class and automatically tie it to the bean.
+
+         e.g if 'Computer computer' is used in Worker class, then using
+         <bean id="computer" class="org.example.Laptop"></bean> would connect that reference automatically
+
+         Even if you have autowire, if you explicitly state the property, it will take priority over autowire
+
+         If you use byType and have multiple beans of the same type, it will cause an error. You can put a primary tag
+         on the bean you want to use by default to get around this when using byType (again specifying property,
+         overwrites this).
+
+         <bean id="worker" class="org.example.Worker" autowire="byType"/>
+         <bean id="computer1" class="org.example.Laptop" primary="true"/>
+    -->
+    <bean id="worker" class="org.example.Worker" autowire="byType">
+        <!--
+             CONSTRUCTOR INJECTION
+
+             This is a constructor injection, calls the constructor of the object being initialized and pass value
+             Any time you pass a value to constructor, you have to have independent tags. So if worker had a constructor
+             that takes age and Laptop, you would do:
+
+             <constructor-arg value="21"/>
+             <constructor-arg ref="laptop"/>
+
+             You would still have to pass the reference since it is a bean(Another object you have in IOC)
+             you are passing
+
+             The order in which you call constructor-arg by default matters, it assigns the values by sequence.
+             So if you did Laptop before 21, it would have a type error.
+
+             To solve this you can have the type, index or name explicitly stated.
+             NOTE - best to use name or index, in the case you have multiple args with the same types
+
+             <constructor-arg value="21" name="age"/>
+             <constructor-arg ref="laptop" name="age"/>
+
+             For this to work you also have to do this when using name, in the specific class:
+
+             @ConstructorProperties({"age","laptop"})
+             public Worker(int age, Laptop laptop) {
+                this.age = age;
+                this.laptop = laptop;
+             }
+
+             for index, you just use the index number on the sequence they appear as arguments
+
+             <constructor-arg value="21" index="0"/>
+             <constructor-arg ref="laptop" index="1"/>
+        -->
+
+        <!--
+             SETTER INJECTION
+
+
+             This is a setter injection, this will call the setter method of the object being created when context is
+             set up for singleton or at getBean call for prototype.
+
+               <property name="age" value="21"></property>
+         -->
+
+        <!--
+             REFERENCE INJECTION
+
+
+             This is a reference injection, this will add the laptop object to the Worker when created.
+             The ref tag is used instead of value (value for primitive types, ref for references to other objects)
+             A bean of the reference object is needed, and the id of that bean is used as the ref value
+         -->
+        
+        <property name="computer">
+            <!--
+                This is the inner bean, meaning it is not available to the entire application
+                Only the worker bean can access this.
+            -->
+            <bean id="computer1" class="org.example.Laptop" primary="true"/>
+        </property>
+    </bean>
+    <!--
+        LAZY-INIT
+
+        this will only create the object when you do getBean. Note that once it is created it will remain in the IOC
+        container, so it will still only need to be created once.
+
+        If a non lazy bean is depending on the lazy bean, it will still get created.
+
+    -->
+    <bean id="computer2" class="org.example.Desktop" lazy-init="true"/>
+</beans>
+
+
+
