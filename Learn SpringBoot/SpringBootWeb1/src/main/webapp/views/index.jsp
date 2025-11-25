@@ -1,0 +1,18 @@
+<%@page language="java" %>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+    <body>
+        <h2>Hello World!!</h2>
+
+        <form action="addWorker">
+            <label for="name">Enter Name :</label>
+            <input type="text" id="name" name="name"><br>
+            <label for="age">Enter 2nd Number :</label>
+            <input type="text" id="age" name="age"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

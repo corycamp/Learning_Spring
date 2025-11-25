@@ -1,10 +1,18 @@
 package org.example;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import java.beans.ConstructorProperties;
 
+@Component
 public class Worker {
     private int age;
+    @Autowired
+    //This is the name of the bean when using Component and AutoWire, this is just the name of the class but lower case
+    @Qualifier("computer")
     private Computer computer;
 
 //    @ConstructorProperties({"age","laptop"})

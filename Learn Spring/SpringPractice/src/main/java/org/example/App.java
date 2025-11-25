@@ -1,6 +1,8 @@
 package org.example;
 
+import org.example.config.AppConfig;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -12,7 +14,11 @@ public class App
     public static void main( String[] args )
     {
         //This line is creating all the objects from the xml file in the IOC container
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        //ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        Desktop desktop = context.getBean(Desktop.class);
+        desktop.compile();
         /*
             getBean returns an Object type, so that is why we cast with:
             Worker worker = (Worker) context.getBean("worker");
@@ -35,6 +41,7 @@ public class App
 
          */
         Worker worker = context.getBean("worker", Worker.class);
+        worker.setComputer(desktop);
         worker.getComputer().compile();
     }
 }
