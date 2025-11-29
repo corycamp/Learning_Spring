@@ -1,11 +1,11 @@
-package com.practice.spring_security;
+package com.practice.spring_security.controller;
 
+import com.practice.spring_security.model.Student;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
