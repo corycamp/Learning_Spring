@@ -17,7 +17,7 @@ public class StudentController {
             new Student(2,"Test2","Python")
     ));
 
-    @GetMapping("csrf-token")
+    @GetMapping("/csrf-token")
     public CsrfToken getCsrfToken(HttpServletRequest request){
         return (CsrfToken) request.getAttribute("_csrf");
     }

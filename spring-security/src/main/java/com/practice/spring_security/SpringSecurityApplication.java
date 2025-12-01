@@ -7,8 +7,8 @@ import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.practice.spring_security.repo")
-@EntityScan("com.practice.spring_security.model")
+//@EnableJpaRepositories("com.practice.spring_security.repo")
+//@EntityScan("com.practice.spring_security.model")
 public class SpringSecurityApplication {
 
 	public static void main(String[] args) {

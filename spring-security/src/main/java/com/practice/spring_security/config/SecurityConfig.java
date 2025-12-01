@@ -40,7 +40,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
-        return  provider;
+        return provider;
     }
 
 //    @Bean
